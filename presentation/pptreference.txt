@@ -1,0 +1,17 @@
+https://www.euromoney.com/learning/blockchain-explained/how-transactions-get-into-the-blockchain
+https://www.educba.com/applications-of-blockchain/
+https://www.youtube.com/watch?v=Pvd1Y0OR2Nk&list=PL8uhW8cclMiP4sb_AA3htt0uKWLVCnak7
+https://www.youtube.com/watch?v=giv2f1FebFA&list=PL8uhW8cclMiP4sb_AA3htt0uKWLVCnak7&index=2
+https://coinmarketcap.com/
+https://ethereum.org/en/dapps/#what-are-dapps
+https://remix.ethereum.org/
+https://www.tutorialspoint.com/solidity/solidity_overview.htm
+
+Software
+1. download node.js
+https://nodejs.org/en/download/
+node --version
+2. download ganache
+https://trufflesuite.com/ganache/
+3. https://remix.ethereum.org/
+
