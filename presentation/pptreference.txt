@@ -6,6 +6,7 @@ https://coinmarketcap.com/
 https://ethereum.org/en/dapps/#what-are-dapps
 https://remix.ethereum.org/
 https://www.tutorialspoint.com/solidity/solidity_overview.htm
+https://ethereum.org/en/developers/tutorials/understand-the-erc-20-token-smart-contract/
 
 Software
 1. download node.js
