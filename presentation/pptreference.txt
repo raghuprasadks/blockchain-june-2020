@@ -7,6 +7,8 @@ https://ethereum.org/en/dapps/#what-are-dapps
 https://remix.ethereum.org/
 https://www.tutorialspoint.com/solidity/solidity_overview.htm
 https://ethereum.org/en/developers/tutorials/understand-the-erc-20-token-smart-contract/
+https://www.youtube.com/watch?v=XyoFT4QkoL4&t=13s
+https://github.com/dappuniversity/erc20_live_coding
 
 Software
 1. download node.js
@@ -15,4 +17,22 @@ node --version
 2. download ganache
 https://trufflesuite.com/ganache/
 3. https://remix.ethereum.org/
+
+Steps to create our own crypto token
+
+1. use the code in
+https://github.com/dappuniversity/erc20_live_coding
+
+2. Go to remix compile,deploy and test
+3. Install metamask plugin in chrome
+4. Deploy on Kovan Test net
+select kovan in meta mask
+create new account
+copy the address of the account and put it in
+https://linkfaucet.protofire.io/kovan 
+5. kovan.etherscan.io
+verify and publish the contract
+6. Uniswap
+https://app.uniswap.org/#/swap?chain=mainnet
+
 
