@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js" integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Product</title>
+</head>
+<body>
+    <h1>eCommerce</h1>
+    <h1>Your Account is</h1>
+    <h2 id="account"></h2>
+    <input type="text" name="name" id="name" placeholder="Enter product name">
+    <input type="number" name="price" id="price" placeholder="Enter price">
+    
+    <input type="button" value="Add Product" onclick="addProduct()">
+    <h1 id="result"></h1>
+    
+    <script>
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    
+  var productContract = new web3.eth.Contract([
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "createProduct",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address payable",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "purchased",
+				"type": "bool"
+			}
+		],
+		"name": "ProductCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address payable",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "purchased",
+				"type": "bool"
+			}
+		],
+		"name": "ProductPurchased",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "purchaseProduct",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "productCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "products",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address payable",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "purchased",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+],'0xE31F6846ed4217C7b1de7f0B051d7e934949E2cD');
+    
+
+async function addProduct(){
+    const accounts = await web3.eth.getAccounts()   
+  
+    console.log('accounts '+accounts)
+   document.getElementById("account").innerHTML= accounts[0];
+
+   var productCount = await productContract.methods.productCount().call()
+   console.log("product count:before "+productCount)
+
+   
+    console.log('inside calculate')
+    var name = document.getElementById("name").value;
+    var price = document.getElementById("price").value;
+    console.log("product name " +productContract.name);
+    console.log("product count :Before " +productContract.productCount);
+    
+    productContract.methods.createProduct(name,price).send({from:'0x7e1656185a8F421e807670E5863e4427c8cec9fe'})
+    .once('receipt', (receipt) => {
+      console.log(receipt)
+    })
+  //  productCount = await productContract.methods.productCount().call()
+  // console.log("product count:after "+productCount)
+
+    
+    }
+
+    </script>
+    
+</body>
+</html>
