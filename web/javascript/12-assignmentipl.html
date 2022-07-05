@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Array Assignment</title>
+</head>
+<body>
+
+    <h1>IPL Player Assignment</h1>
+
+    <script>
+
+        iplplayers=[]
+
+        player1 ={
+            name:"Virat",
+            team:"RCB",
+            season:2022,
+            matches:12,
+            runs:350,
+            wickets:0
+        }
+
+        player2 ={
+            name:"Dhoni",
+            team:"CSK",
+            season:2022,
+            matches:10,
+            runs:250,
+            wickets:0
+        }
+
+        player3 ={
+            name:"Rohit",
+            team:"MI",
+            season:2022,
+            matches:10,
+            runs:300,
+            wickets:5
+        }
+
+        player4 ={
+            name:"Rahul",
+            team:"Royals",
+            season:2022,
+            matches:10,
+            runs:600,
+            wickets:0
+        }
+
+        player5 ={
+            name:"Jadeja",
+            team:"CSK",
+            season:2022,
+            matches:10,
+            runs:300,
+            wickets:10
+        }
+
+        iplplayers.push(player1)
+        iplplayers.push(player2)
+        iplplayers.push(player3)
+        iplplayers.push(player4)
+        iplplayers.push(player5)
+        totalruns=0
+        for (i=0;i<iplplayers.length;i++){
+            player = iplplayers[i]
+            console.log("Name "+player.name +" team "+player.team)
+            totalruns = totalruns +player.runs
+        }
+        console.log("total runs "+totalruns)
+
+
+
+    </script>
+    
+</body>
+</html>

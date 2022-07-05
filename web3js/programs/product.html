@@ -9,10 +9,12 @@
 </head>
 <body onload="loadProducts()">
     <h1>eCommerce</h1>
-    <h1>Your Account is</h1>
+    <h1>Seller Account is</h1>
     <h2 id="account"></h2>
 	<h1>Your Balance is</h1>
     <h2 id="balance"></h2>
+	<h1>Purchaser account</h1>
+	<input type="text" name="purchaser" id="purchaser" placeholder="Enter Purchaser Account">
 	<table id="display"></table>
 
     <input type="text" name="name" id="name" placeholder="Enter product name">
@@ -222,7 +224,7 @@ async function loadProducts() {
    data="<tr><td>Name</td><td>Price</td></tr>"
    for (var i = 1; i <= productCount; i++) {
         var product = await productContract.methods.products(i).call()
-		data +=`<tr><td>${product.name}</td><td>${product.price}</td><td><input type=button value=Buy onclick=buyProduct(${product.owner},${product.price})></td></tr>`
+		data +=`<tr><td>${product.name}</td><td>${product.price}</td><td><input type=button value=Buy onclick=buyProduct(${product.owner},${product.price},${product.purchased})></td></tr>`
 		console.log(product)        
       }  
 	  document.getElementById("display").innerHTML=data;  
@@ -243,10 +245,11 @@ async function addProduct(){
     .once('receipt', (receipt) => {
       console.log(receipt)
     })}
-async function buyProduct(owner,price){
+async function buyProduct(owner,price,purchased){
 
 	console.log("Buy product:owner "+owner)
 	console.log("Buy product:price "+price)
+	console.log("Buy product:purchased "+purchased)
 
 }
 	</script>    
