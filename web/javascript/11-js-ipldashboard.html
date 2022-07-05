@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipl-Dashboard</title>
+</head>
+<body>
+
+    <h1>Ipl-Dashboard</h1>
+    <div>
+        <div>
+            <input type="text" name="name" id="name" placeholder="Player Name">
+            <input type="text" name="team" id="team"  placeholder="Team">
+            <input type="number" name="season" id="season" placeholder="Season">
+            <input type="number" name="matches" id="matches" placeholder="Matches">
+            <input type="number" name="runs" id="runs"  placeholder="Runs">
+            <input type="number" name="wickets" id="wickets"  placeholder="Wickets">
+            <input type="button" value="Add Player" onclick="addPlayer()">
+
+        </div>
+        <div></div>
+    </div>
+
+    <script>
+        iplplayers =[]
+        function ipl(name,team,season,matches,runs,wickets){
+            this.name = name;
+            this.team = team;
+            this.season = season;
+            this.matches = matches;
+            this.runs = runs;
+            this.wickets = wickets;
+        }
+
+        function addPlayer(){
+            console.log('add player')
+            var name = document.getElementById("name").value;
+            team = document.getElementById("team").value;
+            season = document.getElementById("season").value;
+            matches = document.getElementById("matches").value;
+            runs = document.getElementById("runs").value;
+            wickets = document.getElementById("wickets").value;
+
+            player = new ipl(name,team,season,matches,runs,wickets)
+            iplplayers.push(player)
+            console.log(iplplayers)
+        }
+
+    </script>    
+</body>
+</html>

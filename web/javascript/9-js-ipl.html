@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL</title>
+    <style>
+        body{
+            background-color: lightcyan;
+        }
+        #header,label,input{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header">Your favourate players of IPL</h1>
+    <label for="name">Enter Player Name</label>
+    <input type="text" name="name" id="name">
+    <input type="submit" value="Add Player" onclick="addPlayer()">
+    <h1 id="display"></h1>
+    <script>
+        playerlist = []
+        function addPlayer(){            
+
+            player = document.getElementById("name").value;
+            playerlist.push(player)
+            console.log(playerlist)
+            document.getElementById("display").innerHTML=playerlist;
+            document.getElementById("name").value=''
+        }
+
+    </script>
+</body>
+</html>

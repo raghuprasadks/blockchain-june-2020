@@ -7,10 +7,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js" integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Product</title>
 </head>
-<body>
+<body onload="loadProducts()">
     <h1>eCommerce</h1>
     <h1>Your Account is</h1>
     <h2 id="account"></h2>
+	<h1>Your Balance is</h1>
+    <h2 id="balance"></h2>
+	<table id="display"></table>
+
     <input type="text" name="name" id="name" placeholder="Enter product name">
     <input type="number" name="price" id="price" placeholder="Enter price">
     
@@ -18,6 +22,7 @@
     <h1 id="result"></h1>
     
     <script>
+		console.log('script')
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
     
   var productContract = new web3.eth.Contract([
@@ -196,36 +201,53 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-],'0xE31F6846ed4217C7b1de7f0B051d7e934949E2cD');
-    
+],'0xA1569230B6bf373C1B2525A0C3040C81A646886a');
 
-async function addProduct(){
-    const accounts = await web3.eth.getAccounts()   
+async function loadProducts() {
+	console.log('onload')
+
+	const accounts = await web3.eth.getAccounts()   
   
     console.log('accounts '+accounts)
-   document.getElementById("account").innerHTML= accounts[0];
+   document.getElementById("account").innerHTML= '0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c'         ;
 
+  // web3.eth.getBalance("0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c")
+//	.then(console.log);
+   web3.eth.getBalance('0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c', 2, function(error, result) {
+	document.getElementById("balance").innerHTML=result;
+   });
+	productCount = await productContract.methods.productCount().call()
+   console.log("product count:after "+productCount)
+   console.log("product list")
+   data="<tr><td>Name</td><td>Price</td></tr>"
+   for (var i = 1; i <= productCount; i++) {
+        var product = await productContract.methods.products(i).call()
+		data +=`<tr><td>${product.name}</td><td>${product.price}</td><td><input type=button value=Buy onclick=buyProduct(${product.owner},${product.price})></td></tr>`
+		console.log(product)        
+      }  
+	  document.getElementById("display").innerHTML=data;  
+    }             
+      
+
+
+async function addProduct(){
    var productCount = await productContract.methods.productCount().call()
+   var productname = await productContract.methods.name().call()
    console.log("product count:before "+productCount)
-
-   
-    console.log('inside calculate')
+   console.log("product name " +productname);
     var name = document.getElementById("name").value;
     var price = document.getElementById("price").value;
-    console.log("product name " +productContract.name);
-    console.log("product count :Before " +productContract.productCount);
-    
-    productContract.methods.createProduct(name,price).send({from:'0x7e1656185a8F421e807670E5863e4427c8cec9fe'})
+	const pricefinal = window.web3.utils.toWei(price.toString(), 'Ether')
+	console.log('price final '+pricefinal)   
+    productContract.methods.createProduct(name,pricefinal).send({from:'0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c',gas: '3000000'})
     .once('receipt', (receipt) => {
       console.log(receipt)
-    })
-  //  productCount = await productContract.methods.productCount().call()
-  // console.log("product count:after "+productCount)
+    })}
+async function buyProduct(owner,price){
 
-    
-    }
+	console.log("Buy product:owner "+owner)
+	console.log("Buy product:price "+price)
 
-    </script>
-    
-</body>
-</html>
+}
+	</script>    
+</body></html>

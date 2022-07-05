@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+</head>
+<body>
+
+    <h1 style="color:blue;text-align:center">Simple Calculator</h1>
+
+    <input type="text" name="principal" id="principal" placeholder="Enter Principal">
+    <input type="text" name="roi" id="roi" placeholder="Enter Rate Of Interest">
+    <input type="text" name="time" id="time" placeholder="Enter time">
+    <input type="button" value="Calculate" onclick="simpleInterest()">
+    <h2 id="result"></h2>
+    <script>
+
+        function simpleInterest(){
+            //alert('Simple Calculator')
+            p = document.getElementById("principal").value
+            r = document.getElementById("roi").value
+            t = document.getElementById("time").value
+            //alert('principal '+p)
+
+            si = (p*r*t)/100
+           // alert ('si '+si)
+           document.getElementById("result").innerHTML=si
+           document.getElementById("principal").value=''
+           document.getElementById("roi").value=''
+           document.getElementById("time").value=''           
+
+        }
+    </script>     
+    
+</body>
+</html>

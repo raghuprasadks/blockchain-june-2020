@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Constructors</title>
+</head>
+<body>
+
+    <h1>Object Constructors</h1>
+
+    <script>
+        function ipl(name,team,season,matches,runs,wickets){
+            this.name = name;
+            this.team = team;
+            this.season = season;
+            this.matches = matches;
+            this.runs = runs;
+            this.wickets = wickets;
+        }
+
+        player1 = new ipl('virat','rcb',2022,12,400,0)
+        player2 = new ipl('dhoni','csk',2022,12,300,0)
+
+        iplplayers =[]
+        iplplayers.push(player1)
+        iplplayers.push(player2)
+
+        for (i=0;i<iplplayers.length;i++){
+            player = iplplayers[i]
+            console.log("name "+player.name + " team "+player.team)
+        }
+    </script>    
+</body>
+</html>

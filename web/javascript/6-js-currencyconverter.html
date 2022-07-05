@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+</head>
+<body>
+
+    <h1>Currency Converter</h1>
+    From Currency:
+    <select id="fromcurrency">
+        <option value="usd">USD</option>
+        <option value="euro">EURO</option>
+        <option value="pound">Pound</option>
+    </select>
+
+    To Currency:
+    <select id="tocurrency">
+        <option value="inr">INR</option>       
+    </select>
+
+    Amount:
+    <input type="text" name="amount" id="amount">
+
+    <button onclick="convert()">Convert</button>
+    <h2 id="result"></h2>
+    <script>
+
+        function convert(){
+            //alert("currency converter")
+            fromcurrency = document.getElementById("fromcurrency").value
+            amount = document.getElementById("amount").value
+            rate=0;
+            if (fromcurrency=='usd')
+            {
+                rate = 78
+            }else if (fromcurrency=='euro'){
+                rate = 80
+            } else if(fromcurrency=='pound'){
+                rate = 90
+            } else{
+                rate = 0
+            }
+            convertedvalue = amount*rate
+
+            document.getElementById("result").innerHTML=convertedvalue
+        }
+
+    </script>
+
+</body>
+</html>

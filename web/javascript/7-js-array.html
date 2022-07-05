@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Demo</title>
+</head>
+<body>
+    <h1>Array Demo</h1>
+
+    <script>
+
+        marks = []
+        marks.push(20)
+        marks.push(30)
+        marks.push(40)
+        marks.push(50)
+        console.log('marks array '+marks)
+        console.log('marks array length '+marks.length)
+        console.log('Element at 0th index ' +marks[0])
+        marks[0]=22
+        console.log('Element at 0th index - updated' +marks[0])
+        console.log('loop')
+
+        for (i=0;i<marks.length;i++){
+            console.log(marks[i])
+        }
+        console.log('break')
+        for (i=0;i<marks.length;i++){
+            if (marks[i]>30)
+                break
+            console.log(marks[i])
+        }
+
+        console.log('continue')
+        for (i=0;i<marks.length;i++){
+            if (marks[i]==30)
+                continue
+            console.log(marks[i])
+        }
+
+        console.log('pop')
+        poppedelem =marks.pop()
+        console.log('popped element '+poppedelem)
+        console.log('updated marks array '+marks)
+        marks.shift(11)
+        console.log('shift - remove at the beginning '+marks)
+        marks.unshift(26)
+        console.log('unshift - add at the beginning '+marks)
+        console.log('for in loop')
+        for (mark in marks){
+            console.log(marks[mark])
+        }
+
+        console.log('Square of numbers')
+        for (i=1;i<=10;i++){
+            console.log(i*i)
+        }
+
+
+    </script>
+</body>
+</html>
