@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js" integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Product</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/8.0.2/bignumber.min.js" integrity="sha512-7UzDjRNKHpQnkh1Wf1l6i/OPINS9P2DDzTwQNX79JxfbInCXGpgI1RPb3ZD+uTP3O5X7Ke4e0+cxt2TxV7n0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<title>Product</title>
 </head>
 <body onload="loadProducts()">
     <h1>eCommerce</h1>
@@ -203,7 +204,7 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-],'0xA1569230B6bf373C1B2525A0C3040C81A646886a');
+],'0xb70c188aB65b24977700E0a32C383aE79BA27d2D');
 
 async function loadProducts() {
 	console.log('onload')
@@ -211,11 +212,11 @@ async function loadProducts() {
 	const accounts = await web3.eth.getAccounts()   
   
     console.log('accounts '+accounts)
-   document.getElementById("account").innerHTML= '0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c'         ;
+   document.getElementById("account").innerHTML= '0xc45888BF947bC79A03d6F2d4f7Fd3541ad62f08d'         ;
 
   // web3.eth.getBalance("0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c")
 //	.then(console.log);
-   web3.eth.getBalance('0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c', 2, function(error, result) {
+   web3.eth.getBalance('0xc45888BF947bC79A03d6F2d4f7Fd3541ad62f08d', 2, function(error, result) {
 	document.getElementById("balance").innerHTML=result;
    });
 	productCount = await productContract.methods.productCount().call()
@@ -224,7 +225,7 @@ async function loadProducts() {
    data="<tr><td>Name</td><td>Price</td></tr>"
    for (var i = 1; i <= productCount; i++) {
         var product = await productContract.methods.products(i).call()
-		data +=`<tr><td>${product.name}</td><td>${product.price}</td><td><input type=button value=Buy onclick=buyProduct(${product.owner},${product.price},${product.purchased})></td></tr>`
+		data +=`<tr><td>${product.name}</td><td>${product.price}</td><td><input type=button value=Buy onclick=buyProduct(${product.owner},${product.price},${product.purchased}) ${product.purchased==true?disabled:disabled=false}></td></tr>`
 		console.log(product)        
       }  
 	  document.getElementById("display").innerHTML=data;  
@@ -241,7 +242,7 @@ async function addProduct(){
     var price = document.getElementById("price").value;
 	const pricefinal = window.web3.utils.toWei(price.toString(), 'Ether')
 	console.log('price final '+pricefinal)   
-    productContract.methods.createProduct(name,pricefinal).send({from:'0x13cccD36C7A99bE137A5C2bbC1Ef90dc17a68D4c',gas: '3000000'})
+    productContract.methods.createProduct(name,pricefinal).send({from:'0xc45888BF947bC79A03d6F2d4f7Fd3541ad62f08d',gas: '3000000'})
     .once('receipt', (receipt) => {
       console.log(receipt)
     })}
@@ -250,7 +251,15 @@ async function buyProduct(owner,price,purchased){
 	console.log("Buy product:owner "+owner)
 	console.log("Buy product:price "+price)
 	console.log("Buy product:purchased "+purchased)
-
-}
+	purchaser = document.getElementById("purchaser").value
+	//let amount_wei = new BigNumber(purchaser).shiftedBy(18).toString()
+	//let pricebig = new BigNumber(price).toFixed();
+	//console.log("Buy product:pricebig "+pricebig)
+	//const etherValue = Web3.utils.fromWei(price, 'ether');
+	//console.log("big number " +web3.utils.BN(price))
+	productContract.methods.purchaseProduct(purchaser).send({from:'0x031eaD89B6b357fF251572d0d9591121A5998C2a',value: price,gas: '3000000'})
+    .once('receipt', (receipt) => {
+      console.log(receipt)
+    })}
 	</script>    
 </body></html>
