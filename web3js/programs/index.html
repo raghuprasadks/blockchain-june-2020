@@ -1,67 +1,182 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Web3 Metamask Login</title>
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js" integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Calculator</title>
 </head>
+<body onload="loadAccount()">
+    <h1>Simple Calculator</h1>
+    <h1>Your Account is</h1>
+    <h2 id="account"></h2>
+    <input type="text" name="num1" id="num1" placeholder="Enter first number">
+    <input type="text" name="oper" id="oper" placeholder="Enter Operator (+,-,*,/)">
+    <input type="text" name="num2" id="num2" placeholder="Enter second number">
+    <input type="button" value="Calculate" onclick="calculate()">
+    <h1 id="result"></h1>
+    
+    <script>
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+	web3.eth.defaultAccount =null;
+	account=''
+	web3.eth.getAccounts(function (error, result) {
+		console.log(result)
+		web3.eth.defaultAccount = result[0];
+		account=result[0];
+		console.log(web3.eth.defaultAccount)
+	});   
+  
+  console.log('default account:after '+web3.eth.defaultAccount)
+  document.getElementById("account").innerHTML= account;
+  var calculatorContract = new web3.eth.Contract([
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num2",
+				"type": "uint256"
+			}
+		],
+		"name": "add",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num2",
+				"type": "uint256"
+			}
+		],
+		"name": "divide",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num2",
+				"type": "uint256"
+			}
+		],
+		"name": "multiply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num2",
+				"type": "uint256"
+			}
+		],
+		"name": "subtract",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+],'0x091ecb13d0CBd2f763FB72379c233A30908c3978');
+    
+async function loadAccount(){
 
-<body class="flex w-screen h-screen justify-center items-center">
-  <div class="flex-col space-y-2 justify-center items-center">
-    <button id='loginButton' onclick="" class="mx-auto rounded-md p-2 bg-purple-500 text-white">
-      Login with MetaMask
-    </button>
-    <p id='userWallet' class='text-lg text-gray-600 my-2'></p>
-  </div>
+	account=''
+	await web3.eth.getAccounts(function (error, result) {
+		console.log(result)
+		web3.eth.defaultAccount = result[0];
+		account=result[0];
+		console.log(web3.eth.defaultAccount)
+	});   
+  
+  console.log('default account:after '+web3.eth.defaultAccount)
+  document.getElementById("account").innerHTML= account;
 
-  <script>
-    window.userWalletAddress = null
-    const loginButton = document.getElementById('loginButton')
-    const userWallet = document.getElementById('userWallet')
+}
 
-    function toggleButton() {
-      if (!window.ethereum) {
-        loginButton.innerText = 'MetaMask is not installed'
-        loginButton.classList.remove('bg-purple-500', 'text-white')
-        loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed')
-        return false
-      }
-
-      loginButton.addEventListener('click', loginWithMetaMask)
+async function calculate(){
+	document.getElementById("account").innerHTML= web3.eth.defaultAccount;
+    console.log('inside calculate')
+    var num1 = parseInt(document.getElementById("num1").value);
+    var oper = document.getElementById("oper").value;
+    var num2 = parseInt(document.getElementById("num2").value);
+    console.log(calculatorContract)
+    var result=0
+    if (oper=="+"){
+         result =await calculatorContract.methods.add(num1,num2).call({from:'0x9D40959E2fd39d313CEE9b4C2B2Ae3220F3F5D78'});
+         console.log(result)
+    }else if(oper=="-"){
+        result =await calculatorContract.methods.subtract(num1,num2).call({from:'0x9D40959E2fd39d313CEE9b4C2B2Ae3220F3F5D78'});
+        console.log(result)
+    }else if(oper=="*"){
+        result =await calculatorContract.methods.multiply(num1,num2).call({from:'0x9D40959E2fd39d313CEE9b4C2B2Ae3220F3F5D78'});
+        console.log(result)
+    }else if(oper=="/"){
+        result =await calculatorContract.methods.divide(num1,num2).call({from:'0x9D40959E2fd39d313CEE9b4C2B2Ae3220F3F5D78'});
+        console.log(result)
+    } else{
+        result="Invalid operator"
+    }
+         
+    document.getElementById("result").innerHTML=result;
     }
 
-    async function loginWithMetaMask() {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        .catch((e) => {
-          console.error(e.message)
-          return
-        })
-      if (!accounts) { return }
-
-      window.userWalletAddress = accounts[0]
-      userWallet.innerText = window.userWalletAddress
-      loginButton.innerText = 'Sign out of MetaMask'
-
-      loginButton.removeEventListener('click', loginWithMetaMask)
-      setTimeout(() => {
-        loginButton.addEventListener('click', signOutOfMetaMask)
-      }, 200)
-    }
-
-    function signOutOfMetaMask() {
-      window.userWalletAddress = null
-      userWallet.innerText = ''
-      loginButton.innerText = 'Sign in with MetaMask'
-
-      loginButton.removeEventListener('click', signOutOfMetaMask)
-      setTimeout(() => {
-        loginButton.addEventListener('click', loginWithMetaMask)
-      }, 200)
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      toggleButton()
-    });
-  </script>
+    </script>
+    
 </body>
-
 </html>
