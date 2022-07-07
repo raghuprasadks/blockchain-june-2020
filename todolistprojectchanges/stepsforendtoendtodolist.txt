@@ -1,0 +1,20 @@
+step 1 - download todolist
+project from git of dappuniversity
+
+https://github.com/dappuniversity/eth-todo-list
+Step 2 : cd to eth-todo-list
+Step 3 :npm install
+Step 4 : truffle compile
+Step 5 : copy app.js and index.html from 
+kaushalya git to your project
+https://github.com/raghuprasadks/blockchain-june-2020/tree/main/todolistprojectchanges
+
+Step 6 :Start start ganache
+connect to localhost ganache
+Step 7 :import ganache account
+into metamask
+Step 8 :truffle migrate
+Step 9: 
+npm run dev
+Step 10:
+it opens appliction in browser
